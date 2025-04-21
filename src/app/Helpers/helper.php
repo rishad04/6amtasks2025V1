@@ -28,7 +28,7 @@ function ArrayToColumns($model, $ids, $column_index)
 
 
 
-function activeModelData($model_name,$order_by='id',$sort_type='DESC')
+function activeModelData($model_name, $order_by = 'id', $sort_type = 'DESC')
 {
     return app($model_name)->where('is_active', 1)->orderby($order_by, $sort_type)->get();
 }
@@ -40,8 +40,8 @@ function mapActivityOld($activity)
         //defining some variable
         $causer_id = $item['causer_id'];
 
-        $item['link_title']='';
-        $item['link']='';
+        $item['link_title'] = '';
+        $item['link'] = '';
 
 
 
@@ -63,7 +63,7 @@ function mapActivityOld($activity)
         $subject_name = 'Unknown';
 
 
-        if(class_exists($subject_model)){
+        if (class_exists($subject_model)) {
 
             //getting subject details
             $subject_details = app($subject_model)->where('id', $item['subject_id'])->first();
@@ -77,7 +77,6 @@ function mapActivityOld($activity)
                     $subject_name = $subject_details->name;
                 }
             }
-
         }
 
 
@@ -86,38 +85,35 @@ function mapActivityOld($activity)
         $subject_model = stripslashes($subject_model[1]);
 
 
-        if ($item['event'] == 'created') 
-        {
+        if ($item['event'] == 'created') {
             $item['class'] = 'text-success';
             $details = "New $subject_model created as <span class='fw-semibold'>$subject_name</span> by <a href='/admin/admins/$causer_id' class='text-btn text-primary fw-semibold'>$causer_name</a>";
         }
-        
-        if ($item['event'] == 'updated') 
-        {
+
+        if ($item['event'] == 'updated') {
             $item['class'] = 'text-warning';
             $details = '';
-            if ($item['subject_id'] > 0) 
-            {
+            if ($item['subject_id'] > 0) {
                 $details = $subject_model;
-                if($subject_name!=''){$details .= " <span class='fw-semibold'>$subject_name's</span> data"; }
+                if ($subject_name != '') {
+                    $details .= " <span class='fw-semibold'>$subject_name's</span> data";
+                }
                 $details .= " updated by <a href='/admin/admins/$causer_id' class='text-btn text-primary fw-semibold'>$causer_name</a>";
-            } else 
-            {
+            } else {
                 $details = "$subject_model updated by <a href='/admin/admins/$causer_id' class='text-btn text-primary fw-semibold'>$causer_name</a>";
             }
         }
-        
-        if ($item['event'] == 'deleted') 
-        {
+
+        if ($item['event'] == 'deleted') {
             $item['class'] = 'text-danger';
-            $subject_name = isset($item['properties']['old']['name'])? $item['properties']['old']['name']:'Unknown';
+            $subject_name = isset($item['properties']['old']['name']) ? $item['properties']['old']['name'] : 'Unknown';
             $details = "$subject_model <span class='fw-semibold'>$subject_name</span> deleted by <a href='/admin/admins/$causer_id' class='text-btn text-primary fw-semibold'>$causer_name</a>";
         }
-        
-        
-        
 
-        
+
+
+
+
 
 
         return [
@@ -200,46 +196,45 @@ function getSetting($key, $default = null, $lang = false)
     $settings = Setting::all();
 
     $setting = $settings->where('key', $key)->first();
-    
+
     return $setting == null ? $default : $setting->value;
 }
 
-function sendEmail($email,$email_data) {
+function sendEmail($email, $email_data)
+{
 
-    $mail=DB::table('email_settings')->first();
+    $mail = DB::table('email_settings')->first();
     $config = array(
-            'driver' => $mail->driver,
-            'host' => $mail->host,
-            'port' => $mail->port,
-            'from' => array('address' => $mail->from_address, 'name' => $mail->from_name),
-            'encryption' => $mail->encryption,
-            'username' => $mail->username,
-            'password' => $mail->password,
-            'sendmail' => '/usr/sbin/sendmail -bs',
-            'pretend' => False
-        );
-    Config::set('mail',$config);
+        'driver' => $mail->driver,
+        'host' => $mail->host,
+        'port' => $mail->port,
+        'from' => array('address' => $mail->from_address, 'name' => $mail->from_name),
+        'encryption' => $mail->encryption,
+        'username' => $mail->username,
+        'password' => $mail->password,
+        'sendmail' => '/usr/sbin/sendmail -bs',
+        'pretend' => False
+    );
+    Config::set('mail', $config);
 
 
     $toEmail    =   $email;
     $data       =   array(
-        "subject"    =>   isset($email_data['subject'])? $email_data['subject']:Null,
-        "head"    =>   isset($email_data['head'])? $email_data['head']:Null,
-        "greeting"    =>   isset($email_data['greeting'])? $email_data['greeting']:Null,
-        "body"    =>   isset($email_data['body'])? $email_data['body']:Null,
-        "button_url"    =>   isset($email_data['button_url'])? $email_data['button_url']:Null,
-        "button_title"    =>   isset($email_data['button_title'])? $email_data['button_title']:Null,
-        "footer"    =>   isset($email_data['footer'])? $email_data['footer']:Null
+        "subject"    =>   isset($email_data['subject']) ? $email_data['subject'] : Null,
+        "head"    =>   isset($email_data['head']) ? $email_data['head'] : Null,
+        "greeting"    =>   isset($email_data['greeting']) ? $email_data['greeting'] : Null,
+        "body"    =>   isset($email_data['body']) ? $email_data['body'] : Null,
+        "button_url"    =>   isset($email_data['button_url']) ? $email_data['button_url'] : Null,
+        "button_title"    =>   isset($email_data['button_title']) ? $email_data['button_title'] : Null,
+        "footer"    =>   isset($email_data['footer']) ? $email_data['footer'] : Null
     );
 
     // pass dynamic message to mail class
     Mail::to($toEmail)->send(new DynamicEmail($data));
 
-    if(Mail::failures() != 0) {
+    if (Mail::failures() != 0) {
         return True;
-    }
-
-    else {
+    } else {
         return False;
     }
 }
@@ -259,7 +254,9 @@ function setEnv($name, $value)
 
     if (file_exists($path)) {
         file_put_contents($path, str_replace(
-            "$name=".$old, "$name=".$value, file_get_contents($path)
+            "$name=" . $old,
+            "$name=" . $value,
+            file_get_contents($path)
         ));
     }
 }
@@ -270,7 +267,7 @@ function ModelDataDesc($model_name)
     return app($model_name)->orderby('id', 'DESC')->get();
 }
 
-function ModelColumnById($model_name,$column,$id)
+function ModelColumnById($model_name, $column, $id)
 {
     return app($model_name)->find($id)?->$column;
 }
@@ -283,95 +280,84 @@ function avatarUrl()
 
 function isNull($val)
 {
-    if(is_array($val))
-    {
-        if(empty($val))
-        {
+    if (is_array($val)) {
+        if (empty($val)) {
             return 0;
         }
-    }
-    else
-    {
-        $val=str_replace(' ', '', $val);
-        if(trim($val=='' || $val==null))
-        {
+    } else {
+        $val = str_replace(' ', '', $val);
+        if (trim($val == '' || $val == null)) {
             return 1;
         }
-    
+
         return 0;
     }
-
 }
 
-function AuthResponse($token,$user,$message)
+function AuthResponse($token, $user, $message)
 {
     return response()->json([
         'result' => true,
-        'data'=>[
+        'data' => [
             'access_token' => $token,
             'token_type' => 'Bearer',
             'user' => $user,
-            'message' =>$message,
+            'message' => $message,
             'user_id' => $user->id
         ]
     ], 201);
 }
 
-function apiResponse($result,$message,$data=null,$code=200)
+function apiResponse($result, $message, $data = null, $code = 200)
 {
     return response()->json([
         'result' => $result,
         'message' => $message,
-        'data' => $data
-    ],$code);
+        'data' => $data,
+        'status_code' => $code
+    ], $code);
 }
 
-function keywordBaseSearch($searh_key,$columns_array,$model_query)
+function keywordBaseSearch($searh_key, $columns_array, $model_query)
 {
     $terms = explode(" ", $searh_key);
-    if(count($terms)==0)
-    {
+    if (count($terms) == 0) {
         $terms = [$searh_key];
     }
-    
-    if(count($terms)>0)
-    {
-        foreach ($terms as $key=>$term) 
-        {
-            $model_query = $model_query->where(function ($query) use ($term,$columns_array)
-            {
+
+    if (count($terms) > 0) {
+        foreach ($terms as $key => $term) {
+            $model_query = $model_query->where(function ($query) use ($term, $columns_array) {
                 $search_columns = $columns_array;
-                foreach ($search_columns as $column) 
-                {
-                        $query->orWhere($column, 'like', '%'.$term.'%');
+                foreach ($search_columns as $column) {
+                    $query->orWhere($column, 'like', '%' . $term . '%');
                 }
             });
         }
     }
 
-    
+
 
     return $model_query;
 }
 
 function showRoleName($user)
 {
-    $roles=$user->getRoleNames();
-    $roles=json_decode($roles);
-    $roles=implode(', ',$roles);
+    $roles = $user->getRoleNames();
+    $roles = json_decode($roles);
+    $roles = implode(', ', $roles);
 
     return $roles;
 }
 
 function currentLangFlag()
 {
-    $root='assets/images/flags/';
-    $current_lang=session('locale');
-    if($current_lang)
-    {
-        return $root.$current_lang.'.svg';
+    $root = 'assets/images/flags/';
+    $current_lang = session('locale');
+    if ($current_lang) {
+        return $root . $current_lang . '.svg';
     }
-    return $root.'en.svg';
+    return $root . 'en.svg';
 }
 
 function CutString($text, $maxchar, $end = '...')
@@ -413,10 +399,10 @@ function CutString($text, $maxchar, $end = '...')
 
 function renderCKEditorScript($id)
 {
-    $text="<script>
+    $text = "<script>
         document.addEventListener('DOMContentLoaded', (event) => {
             ClassicEditor
-            .create(document.querySelector('#".$id."'))
+            .create(document.querySelector('#" . $id . "'))
             .catch(error => {
                 console.error(error);
             });
@@ -425,37 +411,32 @@ function renderCKEditorScript($id)
     return $text;
 }
 
-function renderCKEditorHtml($column,$isRequired=0,$value='')
+function renderCKEditorHtml($column, $isRequired = 0, $value = '')
 {
-    $text='<textarea type="text" name="'.$column.'" id="'.$column.'"
+    $text = '<textarea type="text" name="' . $column . '" id="' . $column . '"
         class="ckeditor"';
-    if($isRequired)
-    {
-        $text.='required';
+    if ($isRequired) {
+        $text .= 'required';
     }
-    $text.=' >
-        '.$value.'
+    $text .= ' >
+        ' . $value . '
     </textarea>';
     return $text;
 }
 
 
-function getYearArray($from,$to=0)
+function getYearArray($from, $to = 0)
 {
 
-    if(!$to)
-    {
+    if (!$to) {
         $year_to = Carbon::now()->year;
-    }
-    else
-    {
+    } else {
         $year_to = $to;
     }
 
-    $array=[];
-    for($i=$from; $i<=$year_to;$i++)
-    {
-        $array[]=$i;
+    $array = [];
+    for ($i = $from; $i <= $year_to; $i++) {
+        $array[] = $i;
     }
 
     return $array;
@@ -513,8 +494,8 @@ function languageArray()
         '日本語 - Japanese',
         '简体中文 - Simplified Chinese',
         '繁體中文 - Traditional Chinese'
-   ];
-   return $language;
+    ];
+    return $language;
 }
 
 function timeZoneArray()
@@ -663,43 +644,41 @@ function timeZoneArray()
         '(GMT+12:00) Auckland',
         '(GMT+12:00) Wellington',
         '(GMT+13:00) Nukualofa'
-   ];
+    ];
 
-   return $time_zone;
+    return $time_zone;
 }
 
 function myNotifications()
 {
-    $notifications=\App\Models\AdminNotification::where('admin_id',auth()->id());
+    $notifications = \App\Models\AdminNotification::where('admin_id', auth()->id());
 
-    $unseen_count=$notifications->where('is_seen','!=',1)->count();
+    $unseen_count = $notifications->where('is_seen', '!=', 1)->count();
 
-    $all=$notifications->orderBy('is_seen','desc')
-    ->orderBy('created_at','desc')
-    ->take(10)
-    ->get();
+    $all = $notifications->orderBy('is_seen', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->take(10)
+        ->get();
 
 
     return [
-        'unseen_count'=>$unseen_count,
-        'all'=>$all
+        'unseen_count' => $unseen_count,
+        'all' => $all
     ];
 }
 
 function pushAdminNotify($admin_id)
 {
-    $data=[];
-    event(new \App\Events\AdminNotification($data,$admin_id));
+    $data = [];
+    event(new \App\Events\AdminNotification($data, $admin_id));
 }
 
 function filesAsset($files)
 {
-    $prepared_files=[];
-    if($files && is_iterable($files))
-    {
-        foreach($files as $file)
-        {
-            $prepared_files[]=asset($file);
+    $prepared_files = [];
+    if ($files && is_iterable($files)) {
+        foreach ($files as $file) {
+            $prepared_files[] = asset($file);
         }
     }
     return $prepared_files;
@@ -711,17 +690,16 @@ function loginUsingUser($user, $res_message)
     $token = $user->createToken('authToken')->plainTextToken;
 
 
-    if(env('USER_ONE_DEVICE_LOGIN'))
-    {
+    if (env('USER_ONE_DEVICE_LOGIN')) {
         $currentToken = $user->tokens->last();
-    
+
         $user->tokens->except($currentToken->id)->each(function ($token) {
             $token->delete();
         });
 
         DB::table('sessions')
-        ->where('user_id', $user->getAuthIdentifier())
-        ->delete();
+            ->where('user_id', $user->getAuthIdentifier())
+            ->delete();
     }
 
     return response()->json([
@@ -751,10 +729,10 @@ function singleSms($msisdn, $messageBody, $csmsId)
         "csms_id" => $csmsId
     ];
 
-    Log::channel('sms')->info("SMS Request phone: ".$msisdn);
+    Log::channel('sms')->info("SMS Request phone: " . $msisdn);
 
     // https://smsplus.sslwireless.com/api/v3/send-sms
-    $url = trim('https://smsplus.sslwireless.com', '/')."/api/v3/send-sms";
+    $url = trim('https://smsplus.sslwireless.com', '/') . "/api/v3/send-sms";
     $params = json_encode($params);
 
     return callApi($url, $params);
@@ -780,7 +758,7 @@ function callApi($url, $params)
 
     curl_close($ch);
 
-    Log::channel('sms')->info("Sms Response: ".$response);
+    Log::channel('sms')->info("Sms Response: " . $response);
 
     return $response;
 }
@@ -789,16 +767,15 @@ function callApi($url, $params)
 function sendSSLSMS($phone, $text)
 {
 
-    if(gettype($phone)!='string')
-    {
+    if (gettype($phone) != 'string') {
         $phone = (string) $phone;
     }
-    $msisdn=$phone;
-    $messageBody=$text;
-    $csmsId=uniqid();
+    $msisdn = $phone;
+    $messageBody = $text;
+    $csmsId = uniqid();
 
     // return 1;
-    $data=json_decode(singleSms($msisdn, $messageBody, $csmsId));
+    $data = json_decode(singleSms($msisdn, $messageBody, $csmsId));
 
     return $data;
 
@@ -808,10 +785,11 @@ function sendSSLSMS($phone, $text)
 }
 
 
-function get_hashtags($string, $str = 1) {
-    preg_match_all('/#(\w+)/',$string,$matches);
+function get_hashtags($string, $str = 1)
+{
+    preg_match_all('/#(\w+)/', $string, $matches);
     $i = 0;
-    $keywords='';
+    $keywords = '';
     if ($str) {
         foreach ($matches[1] as $match) {
             $count = count($matches[1]);
@@ -828,12 +806,13 @@ function get_hashtags($string, $str = 1) {
     return $keywords;
 }
 
-function popularTags($tag_array) {
+function popularTags($tag_array)
+{
     $p = array();
-    foreach($tag_array as $tags) {
+    foreach ($tag_array as $tags) {
         $tags_arr = array_map('trim', explode(',', $tags));
-        foreach($tags_arr as $tag) {
-            $p[$tag] = array_key_exists($tag, $p) ? $p[$tag]+1 : 1;
+        foreach ($tags_arr as $tag) {
+            $p[$tag] = array_key_exists($tag, $p) ? $p[$tag] + 1 : 1;
         }
     }
     arsort($p);
@@ -841,25 +820,23 @@ function popularTags($tag_array) {
 }
 
 
-function getTrendingTags($datas,$column)   //$datas is rows data of db 
+function getTrendingTags($datas, $column)   //$datas is rows data of db 
 {
-    $tags=[];
+    $tags = [];
 
-    foreach($datas as $data)
-    {
-        $tags[]=str_replace(' ','',get_hashtags($data[$column]));
+    foreach ($datas as $data) {
+        $tags[] = str_replace(' ', '', get_hashtags($data[$column]));
     }
 
-    $tags_text= implode(',',$tags);
+    $tags_text = implode(',', $tags);
 
-    $all_tags_array= explode(',',$tags_text);
-    
-    $popular_tags_ascociative_arr=popularTags($all_tags_array); // keys is tags
+    $all_tags_array = explode(',', $tags_text);
 
-    $popular_tags_array=array_keys($popular_tags_ascociative_arr);
+    $popular_tags_ascociative_arr = popularTags($all_tags_array); // keys is tags
+
+    $popular_tags_array = array_keys($popular_tags_ascociative_arr);
 
     return $popular_tags_array;
-
 }
 
 
@@ -877,8 +854,8 @@ function removeIfFirstZero($phone)
 
 function logOutFromOtherDevice()
 {
-    $user = Auth::user(); 
-    $currentSessionId = session()->getId(); 
+    $user = Auth::user();
+    $currentSessionId = session()->getId();
 
     // Delete all other sessions for the user
     DB::table('sessions')
@@ -892,7 +869,7 @@ function logOutFromOtherDevice()
 }
 
 
-function formatDuration($minutes) 
+function formatDuration($minutes)
 {
     if ($minutes >= 43200) { // 1 month (assuming 30 days)
         $months = floor($minutes / 43200);

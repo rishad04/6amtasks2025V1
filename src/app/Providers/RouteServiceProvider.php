@@ -39,6 +39,9 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/crud.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/frontend.php'));
         });
     }
 
@@ -53,5 +56,4 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
     }
-
 }

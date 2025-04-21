@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -18,14 +19,14 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable implements HasMedia,MustVerifyEmail
+class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
     use TorkActivityLogTrait;
     use SoftDeletes;
-    use HasVisits,InteractsWithMedia;
+    use HasVisits, InteractsWithMedia;
 
 
     /**
@@ -95,6 +96,21 @@ class User extends Authenticatable implements HasMedia,MustVerifyEmail
             ->width(368)
             ->height(232)
             ->sharpen(10);
+    }
+
+    // 6am
+
+    public function subscriptionUsers()
+    {
+        return $this->hasMany(SubscriptionUser::class);
+    }
+
+    public function activeSubscription()
+    {
+        // Return the active subscription if it exists, or null if not
+        return $this->subscriptionUsers()
+            ->where('is_active', 1)
+            ->first();  // Returns the active subscription or null
     }
 
     //RELATIONAL METHOD

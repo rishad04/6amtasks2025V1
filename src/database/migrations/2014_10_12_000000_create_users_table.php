@@ -13,8 +13,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique()->nullable();
+            $table->string('role_name')->nullable();
+            $table->integer('have_cash_amount')->nullable();
+            $table->unsignedBigInteger('is_logged_in')->default(0);
+
             $table->string('country_code')->nullable();
             $table->string('phone')->nullable();
+
             $table->string('notify_by')->nullable();
             $table->string('signup_by')->nullable();
             $table->integer('provider_id')->nullable();
@@ -25,7 +30,7 @@ return new class extends Migration
             $table->text('two_factor_recovery_codes')->nullable();
             $table->string('verification_code')->nullable();
             $table->string('facebook_id')->nullable();
-            $table->string('google_id')->nullable();   
+            $table->string('google_id')->nullable();
             //ADDITIONAL_COLUMN
             $table->integer('is_active')->default(1);
             $table->rememberToken();

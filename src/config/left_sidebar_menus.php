@@ -1,8 +1,8 @@
-<?php return array (
-  0 => 
-  array (
-    0 => 
-    array (
+<?php return array(
+  0 =>
+  array(
+    0 =>
+    array(
       'title' => 'Dashboard',
       'root' => true,
       'icon' => 'lni lni-grid-alt',
@@ -10,8 +10,28 @@
       'permission' => '',
       'new-tab' => false,
     ),
-    1 => 
-    array (
+
+    40 =>
+    array(
+      'title' => 'Subscription Plans',
+      'root' => true,
+      'icon' => 'lni lni-list',
+      'page' => '/admin/subscription-plans',
+      'permission' => 'subscription-plan',
+      'new-tab' => false,
+    ),
+    41 =>
+    array(
+      'title' => 'Subscription Users',
+      'root' => true,
+      'icon' => 'lni lni-list',
+      'page' => '/admin/subscription-users',
+      'permission' => 'subscription-user',
+      'new-tab' => false,
+    ),
+
+    1 =>
+    array(
       'title' => 'Users',
       'root' => true,
       'icon' => 'lni lni-users',
@@ -19,8 +39,8 @@
       'permission' => 'user',
       'new-tab' => false,
     ),
-    2 => 
-    array (
+    2 =>
+    array(
       'title' => 'Profile',
       'root' => true,
       'icon' => 'lni lni-user',
@@ -28,8 +48,8 @@
       'permission' => '',
       'new-tab' => false,
     ),
-    3 => 
-    array (
+    3 =>
+    array(
       'title' => 'Website Settings',
       'root' => true,
       'icon' => 'lni lni-cog',
@@ -37,13 +57,13 @@
       'permission' => 'website-setting',
       'new-tab' => false,
     ),
-    4 => 
-    array (
+    4 =>
+    array(
       'section' => 'Admin Controls',
       'permission' => '',
     ),
-    5 => 
-    array (
+    5 =>
+    array(
       'title' => 'Admins',
       'root' => true,
       'icon' => 'lni lni-user',
@@ -51,8 +71,8 @@
       'permission' => 'admin',
       'new-tab' => false,
     ),
-    6 => 
-    array (
+    6 =>
+    array(
       'title' => 'Roles & Permissions',
       'root' => true,
       'icon' => 'lni lni-protection',
@@ -60,8 +80,8 @@
       'permission' => 'role',
       'new-tab' => false,
     ),
-    7 => 
-    array (
+    7 =>
+    array(
       'title' => 'Admin Menu',
       'root' => true,
       'icon' => 'lni lni-radio-button',
@@ -69,8 +89,8 @@
       'permission' => 'admin-menu',
       'new-tab' => false,
     ),
-    8 => 
-    array (
+    8 =>
+    array(
       'title' => 'Settings',
       'root' => true,
       'icon' => 'lni lni-cog',
@@ -78,8 +98,8 @@
       'permission' => 'setting',
       'new-tab' => false,
     ),
-    9 => 
-    array (
+    9 =>
+    array(
       'title' => 'Blog Categories',
       'root' => true,
       'icon' => 'lni lni-list',
@@ -87,8 +107,8 @@
       'permission' => 'blog-category',
       'new-tab' => false,
     ),
-    10 => 
-    array (
+    10 =>
+    array(
       'title' => 'Blogs',
       'root' => true,
       'icon' => 'lni lni-pencil-alt',
@@ -96,8 +116,8 @@
       'permission' => 'blog',
       'new-tab' => false,
     ),
-    11 => 
-    array (
+    11 =>
+    array(
       'title' => 'Pages',
       'root' => true,
       'icon' => 'lni lni-list',
@@ -105,8 +125,8 @@
       'permission' => 'page',
       'new-tab' => false,
     ),
-    12 => 
-    array (
+    12 =>
+    array(
       'title' => 'Media Library',
       'root' => true,
       'icon' => 'lni lni-list',
@@ -114,8 +134,8 @@
       'permission' => 'media-library',
       'new-tab' => false,
     ),
-    13 => 
-    array (
+    13 =>
+    array(
       'title' => 'Logout',
       'root' => true,
       'icon' => 'lni lni-share-alt',
