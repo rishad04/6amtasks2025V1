@@ -2,9 +2,19 @@
 
 @section('container')
     <!-- Hero Section -->
+
     <section id="hero" class="hero section dark-background">
-        <h2>Welcome To Landing Page</h2>
-        <p>Hello, From here you can choose subscription plans, and also do login/register</p>
+        @if (auth()->user() != '')
+            {{-- <h6 class="sitename">Logged In As {{ auth()->user()->name }} | </h6>
+
+    <h6 class="sitename"> Cash Amount: {{ auth()->user()->have_cash_amount }} Tk</h6> --}}
+
+            <h2>Welcome, {{ auth()->user()->name }} !</h2>
+            {{-- <p>Hello, From here you can choose subscription plans</p> --}}
+        @else
+            <h2>Welcome To Landing Page</h2>
+            <p>Hello, From here you can choose subscription plans, and also do login/register</p>
+        @endif
     </section>
     <!-- pricing Section -->
     <section id="pricing" class="pricing section">

@@ -33,6 +33,48 @@
     <!-- Main CSS File -->
     <link href="{{ asset('frontend/assets/css/main.css') }}" rel="stylesheet">
 
+    <style>
+        /* body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+        } */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #323232;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+            z-index: 9999;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification .message {
+            flex-grow: 1;
+        }
+
+        .notification .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+
     <!-- =======================================================
   * Template Name: Sailor
   * Template URL: https://bootstrapmade.com/sailor-free-bootstrap-theme/

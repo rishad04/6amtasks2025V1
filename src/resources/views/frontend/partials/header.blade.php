@@ -4,30 +4,41 @@
         <a href="index.html" class="logo d-flex align-items-center me-auto">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.png" alt=""> -->
-            <h1 class="sitename">Rishad Hossain's Task Submission Frontend</h1>
+            <h1 class="sitename">6amTask By Rishad: Frontend</h1>
 
         </a>
 
-        <nav id="navmenu" class="navmenu" style="margin-right:10px">
-            <ul>
-                <li><a href="{{ route('frontend.landing.index') }}" class="active">Home</a></li>
-                {{-- <li><a href="{{ route('frontend.landing.index2') }}" class="active">Home2 Auth</a></li> --}}
+        {{-- <button onclick="showNotification('Welcome! This is a test notification.')">Show Notification</button> --}}
 
-                {{-- <li><a href="auth.html">Login</a></li>
-                <li><a href="auth.html">Register</a></li> --}}
+        @if (auth()->user() != '')
+            <button class="btn btn-success" onclick="showNotification('You have a new message!')">Notifications
+            </button>
+
+            <div class="notification" id="notification">
+                <div class="message" id="notification-message"></div>
+                <button class="close-btn" onclick="hideNotification()">&times;</button>
+            </div>
+        @endif
+
+        <nav id="navmenu" class="navmenu" style="margin-right:10px">
+
+            <ul>
+
+                <li><a href="{{ route('frontend.landing.index') }}" class="active">Home</a></li>
+
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
         @if (auth()->user() != '')
-            <h6 class="sitename">Logged In As {{ auth()->user()->name }} | </h6>
+            {{-- <h6 class="sitename">Logged In As {{ auth()->user()->name }} | </h6>
 
-            <h6 class="sitename"> Cash Amount: {{ auth()->user()->have_cash_amount }} Tk</h6>
+            <h6 class="sitename"> Cash Amount: {{ auth()->user()->have_cash_amount }} Tk</h6> --}}
 
             {{-- <a class="btn-getstarted" href="{{ route('frontend.logout') }}"> Logout</a> --}}
 
             <form action="{{ route('frontend.logout') }}" method="POST" style="display: inline;">
                 @csrf
-                <button type="submit">Logout</button>
+                <button type="submit" class="btn btn-danger">Logout</button>
             </form>
         @else
             <a class="btn-getstarted" href="{{ route('frontend.login') }}">Login/Register</a>

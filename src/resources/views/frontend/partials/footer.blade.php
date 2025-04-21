@@ -91,6 +91,27 @@
     }
 </script>
 
+<script>
+    let notificationTimeout;
+
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        const messageBox = document.getElementById('notification-message');
+
+        messageBox.textContent = message;
+        notification.classList.add('show');
+
+        clearTimeout(notificationTimeout);
+        notificationTimeout = setTimeout(() => {
+            hideNotification();
+        }, 5000);
+    }
+
+    function hideNotification() {
+        document.getElementById('notification').classList.remove('show');
+    }
+</script>
+
 @stack('frontend_scripts')
 
 </body>
