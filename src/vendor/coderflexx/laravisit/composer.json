@@ -1,0 +1,67 @@
+{
+    "name": "coderflexx/laravisit",
+    "description": "A package to keep track of your pages & understand your audience",
+    "keywords": [
+        "coderflex",
+        "laravel",
+        "laravisit"
+    ],
+    "homepage": "https://github.com/coderflexx/laravisit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "oussama sid",
+            "email": "oussama@coderflex.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "coderflexx/laravel-presenter": "^2.0",
+        "illuminate/contracts": "^10.0|^11.0",
+        "jaybizzle/crawler-detect": "^1.2",
+        "spatie/laravel-package-tools": "^1.9.2"
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.0|^8.0",
+        "nunomaduro/larastan": "^1.0|^2.0",
+        "orchestra/testbench": "^8.0|^9.0",
+        "pestphp/pest": "^1.22|^2.34",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5|^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Coderflex\\Laravisit\\": "src",
+            "Coderflex\\Laravisit\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Coderflex\\Laravisit\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Coderflex\\Laravisit\\LaravisitServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
