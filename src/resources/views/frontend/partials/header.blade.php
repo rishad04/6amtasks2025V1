@@ -31,11 +31,26 @@
                     <a href="{{ route('frontend.product-showcase.index') }}"
                         class="{{ request()->is('product-showcase') ? 'active' : '' }}">Products</a>
                 </li>
-                <li>
-                    <a href="{{ route('frontend.product-showcase-cached.index') }}"
-                        class="{{ request()->is('product-showcase-cached*') ? 'active' : '' }}">Products(Cached)</a>
-                </li>
 
+                @php
+                    try {
+                        // Using Redis::connection() to ping the Redis server
+                        $isRedisRunning = \Illuminate\Support\Facades\Redis::ping() === 'PONG';
+                        $isRedisRunning = true;
+                    } catch (\Exception $e) {
+                        // In case Redis is not available
+                        $isRedisRunning = false;
+                    }
+                @endphp
+
+                @if ($isRedisRunning)
+                    <li>
+                        <a href="{{ route('frontend.product-showcase-cached.index') }}"
+                            class="{{ request()->is('product-showcase-cached*') ? 'active' : '' }}">
+                            Products(Cached)
+                        </a>
+                    </li>
+                @endif
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -51,7 +66,8 @@
                 <button type="submit" class="btn btn-danger">Logout</button>
             </form>
         @else
-            <a class="btn-getstarted" href="{{ route('frontend.login') }}">Login/Register</a>
+            <a class="btn btn-success mr-5" href="{{ route('frontend.login') }}">Login</a>
+            <a class="btn btn-danger" href="{{ route('frontend.register') }}">Register</a>
         @endif
 
     </div>

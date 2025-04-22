@@ -25,7 +25,7 @@
 
                 @foreach ($plans_frontend as $plan)
                     <div class="col-xl-4 col-lg-6 " data-aos="fade-up" data-aos-delay="100">
-                        <div class="pricing-item {{ $plan->slug == 'basic' ? 'featured' : '' }}">
+                        <div class="pricing-item  featured">
                             <h3>{{ $plan->title }}</h3>
                             <h4><sup>Tk</sup>{{ $plan->price }}<span> / {{ $plan->billing_cycle }}</span></h4>
                             <ul>
@@ -74,63 +74,6 @@
 
     </section><!-- /About Section -->
     <!-- Pricing Section -->
-
-    <!-- Clients Section -->
-    <section id="clients" class="clients section light-background">
-        <div class="container" data-aos="fade-up">
-            <div class="row gy-4">
-                @for ($i = 1; $i <= 6; $i++)
-                    <div class="col-xl-2 col-md-3 col-6 client-logo">
-                        <img src="{{ asset("frontend/assets/img/clients/client-$i.png") }}" class="img-fluid"
-                            alt="Client {{ $i }}">
-                    </div>
-                @endfor
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section">
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Portfolio</h2>
-            <p>Necessitatibus eius consequatur</p>
-        </div>
-
-        <div class="container">
-            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-                <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-                    <li data-filter="*" class="filter-active">All</li>
-                    <li data-filter=".filter-app">App</li>
-                    <li data-filter=".filter-product">Card</li>
-                    <li data-filter=".filter-branding">Web</li>
-                </ul>
-
-                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-                    @for ($i = 1; $i <= 9; $i++)
-                        @php
-                            $filter = match (true) {
-                                $i % 3 === 1 => 'filter-app',
-                                $i % 3 === 2 => 'filter-product',
-                                default => 'filter-branding',
-                            };
-                        @endphp
-                        <div class="col-lg-4 col-md-6 portfolio-item isotope-item {{ $filter }}">
-                            <img src="{{ asset("frontend/assets/img/masonry-portfolio/masonry-portfolio-$i.jpg") }}" class="img-fluid"
-                                alt="Portfolio {{ $i }}">
-                            <div class="portfolio-info">
-                                <h4>Item {{ $i }}</h4>
-                                <p>Lorem ipsum, dolor sit</p>
-                                <a href="{{ asset("frontend/assets/img/masonry-portfolio/masonry-portfolio-$i.jpg") }}"
-                                    title="Item {{ $i }}" data-gallery="portfolio-gallery" class="glightbox preview-link"><i
-                                        class="bi bi-zoom-in"></i></a>
-                                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Subscription view modal sModal Structure -->
     <div id="subscriptionModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="subscriptionModalLabel" aria-hidden="true">
