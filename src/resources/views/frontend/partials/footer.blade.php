@@ -140,5 +140,15 @@
 @stack('frontend_scripts')
 
 </body>
+<script>
+    window.addEventListener('load', function() {
+        const loadTime = performance.now() - window.startTime;
+        const displayTime = loadTime < 1000 ?
+            `${Math.round(loadTime)} ms` :
+            `${(loadTime / 1000).toFixed(2)} s`;
+
+        document.getElementById('loading-time').textContent = displayTime;
+    });
+</script>
 
 </html>

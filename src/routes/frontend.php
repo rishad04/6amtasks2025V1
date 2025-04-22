@@ -17,6 +17,11 @@ Route::group(['as' => 'frontend.'], function () {
     Route::post('/login', [FrontendAuthController::class, 'login'])->name('login.submit')->middleware('guest');
     Route::post('/register', [FrontendAuthController::class, 'register'])->name('register.submit')->middleware('guest');
 
+    Route::get('/product-showcase-cached/{slug?}', [FrontendLandingPageController::class, 'productsCasched'])->name('product-showcase-cached.index');
+    Route::get('/product-showcase/{slug?}', [FrontendLandingPageController::class, 'products'])->name('product-showcase.index');
+    Route::get('/product-details/{slug}', [FrontendLandingPageController::class, 'productDetails'])->name('product.details');
+    Route::get('/product-details-cached/{slug}', [FrontendLandingPageController::class, 'productDetailsCached'])->name('product.details.cached');
+
     Route::post('/logout', [FrontendAuthController::class, 'logout'])->name('logout')->middleware('auth');
 });
 

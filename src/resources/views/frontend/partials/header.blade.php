@@ -21,10 +21,20 @@
         @endif
 
         <nav id="navmenu" class="navmenu" style="margin-right:10px">
-
+            {{-- @dd(request()->url()) --}}
             <ul>
 
-                <li><a href="{{ route('frontend.landing.index') }}" class="active">Home</a></li>
+                <li>
+                    <a href="{{ route('frontend.landing.index') }}" class="{{ request()->is('home*') ? 'active' : '' }}">Home</a>
+                </li>
+                <li>
+                    <a href="{{ route('frontend.product-showcase.index') }}"
+                        class="{{ request()->is('product-showcase') ? 'active' : '' }}">Products</a>
+                </li>
+                <li>
+                    <a href="{{ route('frontend.product-showcase-cached.index') }}"
+                        class="{{ request()->is('product-showcase-cached*') ? 'active' : '' }}">Products(Cached)</a>
+                </li>
 
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

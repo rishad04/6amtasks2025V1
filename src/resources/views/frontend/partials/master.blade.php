@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<script>
+    window.startTime = performance.now();
+</script>
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -72,6 +76,21 @@
             color: #fff;
             font-size: 18px;
             cursor: pointer;
+        }
+
+        .img-2x1 {
+            width: 2in;
+            height: 1.5in;
+            object-fit: cover;
+            /* optional: crops to fill the space */
+        }
+
+        .p-5 {
+            padding-right: 5px;
+        }
+
+        .pl-5 {
+            padding-left: 5px;
         }
     </style>
 

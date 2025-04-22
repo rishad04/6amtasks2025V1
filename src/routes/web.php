@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TodoController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ActivityController;
@@ -32,9 +33,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FileManagerController;
 use App\Http\Controllers\Admin\CommonThingsController;
 use App\Http\Controllers\Admin\EmailSettingController;
-use App\Http\Controllers\Admin\GeneralSettingController;
 
+use App\Http\Controllers\Admin\GeneralSettingController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
+use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\SubscriptionPlanController;
 use App\Http\Controllers\Admin\SubscriptionUserController;
 use App\Http\Controllers\Admin\SwaggerGeneratorController;
@@ -271,8 +273,14 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => 'auth:admin
         pushAdminNotify($user_id);
     });
 
+    //Tasks: 6am
+
     Route::resource('subscription-plans', SubscriptionPlanController::class);
     Route::resource('subscription-users', SubscriptionUserController::class);
+
+    //Task 3
+    Route::resource('product-categories', ProductCategoryController::class);
+    Route::resource('products',           ProductController::class);
 });
 
 // Route::get('/send-test-real-time-notification', function () {
@@ -319,4 +327,9 @@ Route::get('/send-test-real-time-notification', function () {
 
 Route::get('/notification-ui', function () {
     return view('frontend.test_notification');
+});
+
+Route::get('/redis-test', function () {
+    \Illuminate\Support\Facades\Redis::set('rishad', 'you did it!');
+    return \Illuminate\Support\Facades\Redis::get('rishad');
 });

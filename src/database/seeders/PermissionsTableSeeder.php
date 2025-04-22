@@ -15,11 +15,11 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
-        $permissions=[
 
-            
+        $permissions = [
+
+
             [
                 'name' => 'admin-view',
                 'guard_name' => 'admin',
@@ -145,105 +145,176 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'blog-category-view',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-category-create',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-category-update',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-category-delete',
                 'guard_name' => 'admin',
             ],
-        
-        [
+
+            [
                 'name' => 'blog-view',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-create',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-update',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-delete',
                 'guard_name' => 'admin',
             ],
-        
-        [
+
+            [
                 'name' => 'blog-comment-view',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-comment-create',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-comment-update',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'blog-comment-delete',
                 'guard_name' => 'admin',
             ],
-            
+
             [
                 'name' => 'page-view',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'page-create',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'page-update',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'page-delete',
                 'guard_name' => 'admin',
             ],
-            
+
             [
                 'name' => 'media-library-view',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'media-library-create',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'media-library-update',
                 'guard_name' => 'admin',
             ],
-        [
+            [
                 'name' => 'media-library-delete',
                 'guard_name' => 'admin',
             ],
+            // 6am
 
-            
+            [
+                'name' => 'subscription-plan-view',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'subscription-plan-create',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'subscription-plan-update',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'subscription-plan-delete',
+                'guard_name' => 'admin',
+            ],
+
+            [
+                'name' => 'subscription-user-view',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'subscription-user-create',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'subscription-user-update',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'subscription-user-delete',
+                'guard_name' => 'admin',
+            ],
+
+            //task:3
+
+            [
+                'name' => 'product-category-view',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'product-category-create',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'product-category-update',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'product-category-delete',
+                'guard_name' => 'admin',
+            ],
+
+            [
+                'name' => 'products-view',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'products-create',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'products-update',
+                'guard_name' => 'admin',
+            ],
+            [
+                'name' => 'products-delete',
+                'guard_name' => 'admin',
+            ],
+
+
             // [
-        
+
             //     'name' => 'file-manager-create',
             //     'guard_name' => 'admin',
             // ],
             // [
-        
+
             //     'name' => 'file-manager-view',
             //     'guard_name' => 'admin',
             // ],
             // [
-        
+
             //     'name' => 'file-manager-update',
             //     'guard_name' => 'admin',
             // ],
             // [
-        
+
             //     'name' => 'file-manager-delete',
             //     'guard_name' => 'admin',
             // ],
@@ -253,16 +324,12 @@ class PermissionsTableSeeder extends Seeder
 
         ];
 
-        foreach($permissions as $permission){
+        foreach ($permissions as $permission) {
 
             DB::table('permissions')->insert([
                 'name' => $permission['name'],
                 'guard_name' => $permission['guard_name'],
             ]);
-
         }
-        
-        
-        
     }
 }
