@@ -78,15 +78,40 @@
 <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
 
 <script>
-    function SwalFlashMiddlelert(result, title, text, icon = 'success') {
+    function SwalFlashMiddlelert(result, title, text, icon = 'success', position = 'center') {
         Swal.fire({
             toast: result,
-            position: 'middle',
+            position: position,
             icon: icon, /// 'warning', 'error', 'success', 'info', 'question'
             title: title,
             text: text,
             showConfirmButton: false, // Hide the confirmation button
             timer: 3000 // Auto-close after 3 seconds
+        });
+    }
+
+    function SwalFlashNotificationAlert(result, title, text, icon = 'success', position = 'top-right') {
+        Swal.fire({
+            toast: result,
+            position: position,
+            icon: icon,
+            title: title,
+            text: text,
+            showConfirmButton: false,
+            timer: 2200,
+            customClass: {
+                popup: 'fade-toast' // custom fade animation class
+            },
+            willClose: () => {
+                fetch('/get-latest-notification-back-to-set-broadcasted')
+                    .then(res => res.json())
+                    .then(backToSetData => {
+                        console.log(backToSetData);
+                    })
+                    .catch(error => {
+                        console.error('Error setting notification as seen:', error);
+                    });
+            }
         });
     }
 </script>

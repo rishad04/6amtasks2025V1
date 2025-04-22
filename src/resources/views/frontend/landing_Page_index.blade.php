@@ -19,6 +19,8 @@
     <!-- pricing Section -->
     <section id="pricing" class="pricing section">
 
+        {{-- <div id="notifications"></div> --}}
+
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Task 1: Subscription Management</h2>
@@ -312,4 +314,107 @@
             });
         });
     </script>
+
+    {{-- task: 2 --}}
+
+    {{-- <script>
+        let lastMessage = '';
+
+        function fetchNotification() {
+            fetch('/get-latest-notification')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message && data.message !== lastMessage) {
+                        document.getElementById('notifications').innerHTML = `<p>${data.message}</p>` + document.getElementById(
+                            'notifications').innerHTML;
+                        lastMessage = data.message;
+                    }
+                });
+        }
+
+        setInterval(fetchNotification, 3000);
+        fetchNotification();
+    </script> --}}
+
+    <script>
+        function getCookie(name) {
+            const value = `; ${document.cookie}`; // Add semicolon at the beginning to handle edge cases
+            const parts = value.split(`; ${name}=`); // Split the cookie string by the name
+            if (parts.length === 2) return parts.pop().split(';').shift(); // Return the cookie value if found
+            return null; // Return null if cookie is not found
+        }
+        let login_frontend_cookie = getCookie('frontend_user_session_cookie');
+
+        if (login_frontend_cookie != null) {
+            console.log('cookie for frontend is Set');
+
+            function checkForNotification() {
+                fetch('/get-latest-notification')
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log(data);
+
+                        if (data.message != null) {
+                            SwalFlashNotificationAlert(true, '🔔 ' + data.message, null, null);
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error('Error fetching latest notification:', error);
+                    });
+            }
+        } else {
+            console.log('cookie for frontend is null');
+        }
+        // let lastMessage = '';
+
+        // function checkForNotification() {
+        //     fetch('/get-latest-notification')
+        //         .then(res => res.json())
+        //         .then(data => {
+        //             console.log(data);
+
+        //             // Show the SweetAlert
+        //             Swal.fire({
+        //                 title: data.message,
+        //                 text: data.message,
+        //                 icon: 'info',
+        //                 showCancelButton: false, // No need for a cancel button if it's just informational
+        //                 confirmButtonColor: '#d33'
+        //             }).then(() => {
+        //                 // After the Swal popup is closed, make another API call
+        //                 fetch('/get-latest-notification-back-to-set-old')
+        //                     .then(res => res.json())
+        //                     .then(backToSetData => {
+        //                         console.log(backToSetData);
+        //                         // Handle the response after setting the notification as seen
+        //                     })
+        //                     .catch(error => {
+        //                         console.error('Error setting notification as seen:', error);
+        //                     });
+        //             });
+        //         })
+        //         .catch(error => {
+        //             console.error('Error fetching latest notification:', error);
+        //         });
+        // }
+
+
+        // Check every 3 seconds
+        setInterval(checkForNotification, 3000);
+
+        // First check on load
+        // checkForNotification();
+    </script>
+
+    {{-- <script>
+        SwalFlashNotificationlert(true, ' 🔔 hellow rishad', null, null);
+    </script> --}}
+    {{-- <script>
+        window.Echo.channel('online-users')
+            .listen('.user.registered', (data) => {
+                console.log("New user joined:", data);
+                alert(`${data.name} just joined!`);
+            });
+    </script> --}}
 @endpush

@@ -1,6 +1,7 @@
 <?php
 
 use GuzzleHttp\Middleware;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendAuthController;
 use App\Http\Controllers\Admin\SubscriptionUserController;
@@ -26,6 +27,12 @@ Route::group(['Middleware' => 'auth:sanctum'], function () {
     Route::get('/subscription-view/{id}', [SubscriptionUserController::class, 'subscriptionShowFrontend'])->middleware('auth:sanctum');
 
     Route::post('/subscription-cancel', [SubscriptionUserController::class, 'cancelSubscription'])->name('subscription.cancel')->middleware('auth:sanctum');
+
+    Route::get('/get-latest-notification2', function () {
+        return response()->json([
+            'message' => Cache::get('latest_notification')
+        ]);
+    });
 });
 
 // Route::middleware('auth:sanctum')->get('/dashboard', function () {

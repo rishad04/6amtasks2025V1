@@ -125,40 +125,40 @@
   /**
    * Init isotope layout and filters
    */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
-    let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-    let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-    let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
+  // document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
+  //   let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
+  //   let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
+  //   let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
 
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
-      });
-    });
+  //   let initIsotope;
+  //   imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
+  //     initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
+  //       itemSelector: '.isotope-item',
+  //       layoutMode: layout,
+  //       filter: filter,
+  //       sortBy: sort
+  //     });
+  //   });
 
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-        this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        if (typeof aosInit === 'function') {
-          aosInit();
-        }
-      }, false);
-    });
+  //   isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
+  //     filters.addEventListener('click', function() {
+  //       isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
+  //       this.classList.add('filter-active');
+  //       initIsotope.arrange({
+  //         filter: this.getAttribute('data-filter')
+  //       });
+  //       if (typeof aosInit === 'function') {
+  //         aosInit();
+  //       }
+  //     }, false);
+  //   });
 
-  });
+  // });
 
   /**
    * Initiate Pure Counter
    */
-  new PureCounter();
+  // new PureCounter();
 
   /**
    * Animate the skills items on reveal
@@ -195,5 +195,26 @@
   }
 
   window.addEventListener("load", initSwiper);
+
+  import Echo from 'laravel-echo';
+
+// If you're using Pusher in future, config would go here
+// window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+    broadcaster: 'null', // for now, since no pusher or socket.io
+    // If you use pusher later:
+    // broadcaster: 'pusher',
+    // key: 'your-pusher-key',
+    // cluster: 'mt1',
+    // forceTLS: true
+});
+
+// Listen on 'users' channel and event name 'user.registered'
+window.Echo.channel('users')
+    .listen('.user.registered', (data) => {
+        console.log("User Registered:", data);
+        alert(`${data.name} just joined!`);
+    });
 
 })();

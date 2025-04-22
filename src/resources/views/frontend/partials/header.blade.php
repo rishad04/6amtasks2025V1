@@ -15,7 +15,7 @@
             </button>
 
             <div class="notification" id="notification">
-                <div class="message" id="notification-message"></div>
+                <div class="message" id="notifications"></div>
                 <button class="close-btn" onclick="hideNotification()">&times;</button>
             </div>
         @endif

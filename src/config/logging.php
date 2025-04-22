@@ -89,7 +89,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
@@ -128,7 +128,7 @@ return [
         ],
         'query' => [
             'driver' => 'single',
-            'path' => storage_path('logs/query/query-'.date('Y-m-d').'.log'),
+            'path' => storage_path('logs/query/query-' . date('Y-m-d') . '.log'),
             'level' => 'debug',
         ],
         'sms' => [
@@ -140,6 +140,11 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/schedule/schedule-' . date('Y-m-d') . '.log'),
             'level' => 'debug',
+        ],
+        'notifications' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/notifications.log'),
+            'level' => 'info', // or 'debug', 'warning', depending on your needs
         ],
     ],
 

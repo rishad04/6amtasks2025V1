@@ -11,10 +11,15 @@
 |
 */
 
+use App\Models\User;
+use App\Models\Notification;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\ArtisanController;
+use App\Events\Task2\TestRealTimeNotification;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TodoController;
 use App\Http\Controllers\Admin\UserController;
@@ -28,12 +33,12 @@ use App\Http\Controllers\Admin\FileManagerController;
 use App\Http\Controllers\Admin\CommonThingsController;
 use App\Http\Controllers\Admin\EmailSettingController;
 use App\Http\Controllers\Admin\GeneralSettingController;
+
 use App\Http\Controllers\Admin\WebsiteSettingController;
 use App\Http\Controllers\Admin\SubscriptionPlanController;
 use App\Http\Controllers\Admin\SubscriptionUserController;
 use App\Http\Controllers\Admin\SwaggerGeneratorController;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
-
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController as AdminResetPasswordController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController as AdminForgotPasswordController;
@@ -268,4 +273,50 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => 'auth:admin
 
     Route::resource('subscription-plans', SubscriptionPlanController::class);
     Route::resource('subscription-users', SubscriptionUserController::class);
+});
+
+// Route::get('/send-test-real-time-notification', function () {
+//     Log::info('Triggering TestRealTimeNotification');
+//     broadcast(new TestRealTimeNotification("🔥 This is a test real-time notification!"));
+//     return response()->json(['status' => 'Notification broadcasted']);
+// });
+
+Route::get('/get-latest-notification', function () {
+    $message = Cache::get('latest_notification');
+
+    $notification = Notification::where('is_broadcasted', 0)->first();
+
+    if ($notification != '') {
+        return response()->json(['message' => $notification->message]);
+    }
+
+    return response()->json(['message' => null]);
+});
+Route::get('/get-latest-notification-back-to-set-broadcasted', function () {
+    Notification::query()->update(['is_broadcasted' => 1]);
+    // dd($notification);
+    return response()->json(['message' => 'resetted!']);
+});
+
+Route::get('/send-test-real-time-notification', function () {
+    $message = "🔥 This is a test real-time notification! " . now()->toTimeString();
+
+    // Simulate storing to "send" to the frontend
+    Cache::put('latest_notification', $message, 60);
+
+    // Simulate broadcasting (will log it)
+    broadcast(new TestRealTimeNotification($message));
+
+    return response()->json(['status' => 'Notification broadcasted and stored']);
+});
+
+// Route::get('/get-latest-notification', function () {
+//     $message                           = 'New User Alert! Say Hellow To Tarek';
+//     $logged_in_user                    = User::where('is_active', 1)->where('is_logged_in', 1)->get();
+//     return response()->json(['message' => $message, 'logged_in_user_list' => $logged_in_user]);
+// });
+
+
+Route::get('/notification-ui', function () {
+    return view('frontend.test_notification');
 });
